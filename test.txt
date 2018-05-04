@@ -1,0 +1,5 @@
+This is my paper. It's a very interesting paper, as evidenced by Mr. Smith giving it a favorable rating. 
+I'm hoping this paper will help me become a better Ph.D student and eventually earn my Ph.D..
+I live in the U.S.A., where are you from?
+I'm friends with 50% of people in my neighborhood.
+As you can see in the histogram in Fig. 3, the distribution of ages in our neighborhood is normal.
