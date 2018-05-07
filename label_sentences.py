@@ -1,14 +1,11 @@
 import pandas as pd
+
+
 def main():
     """Driver"""
     with open('sentences.csv', 'r') as f:
         data = f.read()
-    print(data)
-
     df = pd.read_csv('sentences.csv')
-    print(df)
-
-    out = []
     for i, row in df.iterrows():
         print(row[0])
         x = input()
