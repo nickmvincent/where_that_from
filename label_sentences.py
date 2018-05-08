@@ -1,17 +1,21 @@
 import pandas as pd
+import numpy as np
 
-
-def main():
+def main(filename='sample_paper.csv', load_from='sentences', label_all=False):
     """Driver"""
-    with open('sentences.csv', 'r') as f:
-        data = f.read()
-    df = pd.read_csv('sentences.csv')
+    df = pd.read_csv('{}/{}'.format(load_from, filename), encoding='utf-8', quotechar='`')
     for i, row in df.iterrows():
-        print(row[0])
+
+        # If label_all is True, never skip.
+        if not label_all and not np.isnan(row[1]):
+            continue
         x = input()
+
         if x:
-            df.iloc[i, 1] = 1
-    df.to_csv('labeled_sentences.csv', index=False)
+            if x == 'q':
+                break
+            df.iloc[i, 1] = float(x)
+    df.to_csv('labeled_sentences/labeled_{}'.format(filename), index=False, quotechar='`')
 
 if __name__ == '__main__':
     main()  

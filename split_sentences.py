@@ -1,6 +1,6 @@
 from nltk import tokenize
 
-def main():
+def test():
     """Driver"""
     filename = 'test.txt'
     with open(filename, 'r') as f:
@@ -11,11 +11,23 @@ def main():
     # erroneously splits on "Fig. 3"
     assert len(sentences) == 6
 
+
+def split_sentences(filename='sample_paper.txt'):
+    """Driver"""
+    with open(filename, 'r') as f:
+        data = f.read()
+    data = data.replace('Fig.', 'Figure')
+    sentences = tokenize.sent_tokenize(data)
+    print(sentences)
+
     out = ['text,label']
     for sentence in sentences:
-        out.append('"' + sentence + '",0')
-    with open('sentences.csv', 'w') as f:
+        out.append('`' + sentence + '`,nan')
+    with open('sentences/{}'.format(
+        filename.replace('.txt', '.csv')
+    ), 'w', encoding='utf-8') as f:
         f.write('\n'.join(out))
+    
 
 if __name__ == '__main__':
-    main()
+    split_sentences()
