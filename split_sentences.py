@@ -16,7 +16,14 @@ def split_sentences(filename='sample_paper.txt'):
     """Driver"""
     with open(filename, 'r') as f:
         data = f.read()
-    data = data.replace('Fig.', 'Figure')
+    pairs = {
+        'Fig': 'Fig',
+        'e.g.': 'eg',
+        'i.e.': 'ie',
+        'et al.': 'et al',
+    }
+    for key, val in pairs.items():
+        data = data.replace(key, val)
     sentences = tokenize.sent_tokenize(data)
     print(sentences)
 
