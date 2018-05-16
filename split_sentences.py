@@ -12,9 +12,9 @@ def test():
     assert len(sentences) == 6
 
 
-def split_sentences(filename='sample_paper.txt'):
+def split_sentences(filepath='sample_paper.txt'):
     """Driver"""
-    with open(filename, 'r') as f:
+    with open(filepath, 'r') as f:
         data = f.read()
     pairs = {
         'Fig': 'Fig',
@@ -29,10 +29,9 @@ def split_sentences(filename='sample_paper.txt'):
 
     out = ['text,label']
     for sentence in sentences:
-        out.append('`' + sentence + '`,nan')
-    with open('sentences/{}'.format(
-        filename.replace('.txt', '.csv')
-    ), 'w', encoding='utf-8') as f:
+        out.append('"' + sentence + '",nan')
+    csv_filepath = filepath.replace('txt_files', 'sentences').replace('.txt', '.csv')
+    with open(csv_filepath, 'w', encoding='utf-8') as f:
         f.write('\n'.join(out))
     
 

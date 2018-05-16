@@ -1,9 +1,15 @@
 import pandas as pd
 import numpy as np
 
-def label_sentences(args, filename='sample_paper.csv', label_all=False):
+def label_sentences(filepath='sample_paper.csv', load_from=None,  label_all=False):
     """Driver"""
-    df = pd.read_csv('{}/{}'.format(args.load_from, filename), encoding='utf-8', quotechar='`')
+    if load_from:
+        filepath = '{}/{}'.format(load_from, filepath)
+    print('load_from', load_from)
+    print('filepath', filepath)
+    input()
+
+    df = pd.read_csv(filepath, encoding='utf-8')
     for i, row in df.iterrows():
 
         print(row[0])
@@ -28,7 +34,12 @@ def label_sentences(args, filename='sample_paper.csv', label_all=False):
                 break
         if savequit:
             break
-    df.to_csv('labeled_sentences/{}'.format(filename), index=False, quotechar='`')
+    outname = filepath.replace(
+        'sentences/', 'labeled_sentences/',    
+    ).replace(
+        'sentences\\', 'labeled_sentences/'
+    )
+    df.to_csv(outname, index=False)
 
 
 def parse():
@@ -37,7 +48,7 @@ def parse():
     parser = argparse.ArgumentParser(description='Allows a human to label sentences via CLI.')
     parser.add_argument('--load_from', default='sentences', help='The directory to load sentences.csv from')
     args = parser.parse_args()
-    label_sentences(args)
+    label_sentences(load_from=args.load_from)
 
 if __name__ == '__main__':
     parse()
