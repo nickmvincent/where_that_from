@@ -27,9 +27,9 @@ def split_sentences(filepath='sample_paper.txt'):
     sentences = tokenize.sent_tokenize(data)
     print(sentences)
 
-    out = ['text,label']
+    out = ['text,label,has_citation']
     for sentence in sentences:
-        out.append('"' + sentence + '",nan')
+        out.append('"' + sentence.replace('"', '""') + '",nan,nan')
     csv_filepath = filepath.replace('txt_files', 'sentences').replace('.txt', '.csv')
     with open(csv_filepath, 'w', encoding='utf-8') as f:
         f.write('\n'.join(out))
