@@ -1,0 +1,23 @@
+defaultdict(<class 'dict'>,
+            {'5nn0': {'test_accuracy': 0.8307354148460051,
+                      'test_f1_macro': 0.5308613683377158,
+                      'test_roc_auc': 0.6794202257555725},
+             'GaussianNB0': {'test_accuracy': 0.7542294960408887,
+                             'test_f1_macro': 0.5840946350937146,
+                             'test_roc_auc': 0.6594835307709509},
+             'dummy0': {'test_accuracy': 0.8929133232700405,
+                        'test_f1_macro': 0.4716829065605997,
+                        'test_roc_auc': 0.5},
+             'logistic0': {'test_accuracy': 0.9495431794708826,
+                           'test_f1_macro': 0.8418836524377363,
+                           'test_roc_auc': 0.9187998781859456},
+             'svm0': {'test_accuracy': 0.9404300733561082,
+                      'test_f1_macro': 0.8310463509936795,
+                      'test_roc_auc': 0.8945296688623392},
+             'tree0': {'test_accuracy': 0.93685230793676,
+                       'test_f1_macro': 0.8267357905194583,
+                       'test_roc_auc': 0.8134521877764047}})
+                   5nn0  GaussianNB0    dummy0  logistic0      svm0     tree0
+test_accuracy  0.830735     0.754229  0.892913   0.949543  0.940430  0.936852
+test_f1_macro  0.530861     0.584095  0.471683   0.841884  0.831046  0.826736
+test_roc_auc   0.679420     0.659484  0.500000   0.918800  0.894530  0.813452

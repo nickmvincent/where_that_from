@@ -1,6 +1,7 @@
 *.pdf
 labeled_sentences/
 sentences/
+txt_files/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
