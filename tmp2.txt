@@ -1,0 +1,4 @@
+               dummy0  logistic0      svm0
+test_accuracy  0.895077   0.914676  0.904923
+test_f1_macro  0.472314   0.725108  0.730372
+test_roc_auc   0.500000   0.852174  0.800984

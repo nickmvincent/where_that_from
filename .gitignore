@@ -2,6 +2,8 @@
 labeled_sentences/
 sentences/
 txt_files/
+rnn_sentences/
+glove*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
