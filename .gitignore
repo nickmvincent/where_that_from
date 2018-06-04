@@ -4,6 +4,7 @@ sentences/
 txt_files/
 rnn_sentences/
 glove*
+rnn.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,0 +1,10 @@
+To train:
+screen -S proj ./scripts/proj.sh
+
+To sample:
+python sample.py --init_dir=pretrained_shakespeare \
+--length=1000 \
+--temperature=0.5 \
+--start_text="HAMLET:"
+
+
