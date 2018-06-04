@@ -61,6 +61,7 @@ def main():
                 data = pd.read_csv(path, encoding='utf-8')
             else:
                 data = pd.concat([data, pd.read_csv(path, encoding='utf-8')])
+        data.to_csv('all_labeled_sentences.csv')
     
 
 
@@ -73,13 +74,13 @@ def main():
 
     print(data.head())
     print(len(data.index))
-#    input()
+    input()
 
     mapper = DataFrameMapper([
         ('processed_text', 
-            MeanEmbeddingVectorizer(w2v#CountVectorizer(
+            CountVectorizer(
                 #stop_words='english', 
-                #lowercase=True,
+                lowercase=True,
                 #ngram_range=(5,5)
                 # max_features=10000
                 )

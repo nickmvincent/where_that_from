@@ -1,5 +1,6 @@
 *.pdf
 labeled_sentences/
+all_labeled_sentences.csv
 sentences/
 txt_files/
 rnn_sentences/
