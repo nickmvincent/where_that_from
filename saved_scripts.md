@@ -1,6 +1,8 @@
 # Prep the cloud session
 sudo apt-get install screen
-
+sudo pip install pandas
+sudo pip install scipy
+sudo pip install sklearn
 
 
 # To train:

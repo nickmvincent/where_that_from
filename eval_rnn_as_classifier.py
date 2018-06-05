@@ -81,11 +81,14 @@ def main():
         np.random.seed(args.seed)
     # Sampling a sequence 
 
-    data = pd.read_csv('test.csv', encoding='utf8')
+    data = pd.read_csv('data/test_0.csv', encoding='utf8')
 
     y = []
     y_hat = []
+    n = len(data.index)
     for i, row in data.iterrows():
+        if i % 10 == 0:
+            print('{} of {} examples tested'.format(i, n))
         text = row['processed_text'] + '</s>'
         has_citation = row['has_citation']
         y.append(has_citation)
@@ -97,7 +100,7 @@ def main():
                                             max_prob=args.max_prob)
             #print('Sampled text is:\n%s' % sample)
             predicted_label = int(sample[-1])
-            print('Predicted label is: {}'.format(predicted_label))
+            # print('Predicted label is: {}'.format(predicted_label))
             y_hat.append(predicted_label)
 
     try:
