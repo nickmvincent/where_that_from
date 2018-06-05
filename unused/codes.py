@@ -1,3 +1,9 @@
+"""
+reader beware:
+this file is current
+UNUSED
+"""
+
 CODES = {
     0: 'No data dependency',
     1: 'Direct data dependency',

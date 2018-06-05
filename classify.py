@@ -19,6 +19,7 @@ from sklearn.model_selection import cross_validate, StratifiedKFold, KFold
 from sklearn import svm
 from sklearn.dummy import DummyClassifier
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 
@@ -78,6 +79,7 @@ def main():
         (DummyClassifier(strategy='most_frequent'), 'dummy',),
         (LogisticRegression(verbose=0), 'logistic'),
         (svm.LinearSVC(verbose=0), 'svm',),
+        (ExtraTreesClassifier(), 'extra_trees')
         #(DecisionTreeClassifier(), 'tree'),
         #(KNeighborsClassifier(), '5nn'), # very slow!
         #(GaussianNB(), 'GaussianNB', ) # 'test_accuracy': 0.6799676150821188
