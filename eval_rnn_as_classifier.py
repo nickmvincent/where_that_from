@@ -81,7 +81,7 @@ def main():
         np.random.seed(args.seed)
     # Sampling a sequence 
 
-    data = pd.read_csv('all_labeled_sentences.csv')
+    data = pd.read_csv('test.csv', encoding='utf8')
 
     y = []
     y_hat = []
@@ -95,20 +95,26 @@ def main():
                                             vocab_index_dict, index_vocab_dict,
                                             temperature=args.temperature,
                                             max_prob=args.max_prob)
-            print('Sampled text is:\n%s' % sample)
+            #print('Sampled text is:\n%s' % sample)
             predicted_label = int(sample[-1])
             print('Predicted label is: {}'.format(predicted_label))
             y_hat.append(predicted_label)
-        if i > 5:
-            break
 
-    roc_auc = metrics.roc_auc_score(y, y_hat)
+    try:
+        roc_auc = metrics.roc_auc_score(y, y_hat)
+    except ValueError:
+        roc_auc = 'undefined'
     f1_macro = metrics.f1_score(y, y_hat, average='macro')
     acc = metrics.accuracy_score(y, y_hat)
 
     print('roc_auc: {}\nf1_macro:{}\nacc:{}'.format(
         roc_auc, f1_macro, acc
     ))
+
+    with open('y_hat.txt', 'w') as f:
+        f.write('\n'.join(
+            [str(x) for x in y_hat]
+        ))
 
 if __name__ == '__main__':
     main()

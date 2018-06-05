@@ -103,12 +103,12 @@ def main():
         # if name == 'logistic':
         #     clf.fit(X, data.has_citation)
         #     print_topk(10, mapper.transformed_names_, clf)
-        for i, folds in enumerate([
+        for i, fold in enumerate([
             # StratifiedKFold(5, True, 0),
             KFold(n_splits=5, shuffle=True, random_state=0)
         ]):
             scores = cross_validate(
-                clf, X, y=data.has_citation, cv=folds,
+                clf, X, y=data.has_citation, cv=fold,
                 scoring=['accuracy', 'roc_auc', 'f1_macro', ])
             ret = {}
             for key, val in scores.items():

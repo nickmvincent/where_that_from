@@ -1,7 +1,0 @@
-To train:
-screen -S proj ./scripts/proj.sh
-
-To sample:
-python sample.py --init_dir=proj --length=1 --temperature=0.5 --start_text="This study examines whether localness is a constant, universally shared benefit of VGI, or one that varies depending on the context in which it is produced.</s>"
-
-

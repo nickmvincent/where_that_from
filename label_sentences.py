@@ -47,22 +47,21 @@ def label_sentences(filepath='sample_paper.csv', mode='manual',load_from=None,  
     ).replace(
         'sentences\\', 'labeled_sentences/'
     )
-
-    rnn_outname = filepath.replace(
-        'sentences/', 'rnn_sentences/',    
-    ).replace(
-        'sentences\\', 'rnn_sentences/'
-    ).replace(
-        '.csv', '.txt',
-    )
     df.to_csv(outname, index=False)
 
-    outstr = ''
-    for i, row in df.iterrows():
-        outstr += row[0] + '</s>' + str(int(row['has_citation'])) + ' '
+    # rnn_outname = filepath.replace(
+    #     'sentences/', 'rnn_sentences/',    
+    # ).replace(
+    #     'sentences\\', 'rnn_sentences/'
+    # ).replace(
+    #     '.csv', '.txt',
+    # )
+    # outstr = ''
+    # for i, row in df.iterrows():
+    #     outstr += row[0] + '</s>' + str(int(row['has_citation'])) + ' '
     
-    with open(rnn_outname, 'w') as f:
-        f.write(outstr)
+    # with open(rnn_outname, 'w') as f:
+    #     f.write(outstr)
 
 
 def parse():
