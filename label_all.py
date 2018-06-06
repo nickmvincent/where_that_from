@@ -1,6 +1,6 @@
 import glob
 from label_sentences import label_sentences
-from sklearn.model_selection import KFold
+from sklearn.model_selection import StratifiedKFold
 import pandas as pd
 
 sentences_filepaths = glob.glob("sentences/*.csv")
@@ -17,18 +17,16 @@ for path in sentences_filepaths:
         data = pd.concat([data, pd.read_csv(path, encoding='utf-8')])
 data.to_csv('all_labeled_sentences.csv')
 
-for _, fold in enumerate([
-        # StratifiedKFold(5, True, 0),
-        KFold(n_splits=5, shuffle=True, random_state=0)
-    ]):
-        for i, (train_index, test_index) in enumerate(fold.split(data)):
-            data.iloc[test_index].to_csv('pre_split_data/test_{}.csv'.format(i), encoding='utf8')
-            train_df = data.iloc[train_index]
-            
-            outstr = ''
-            for _, row in train_df.iterrows():
-                outstr += row[0] + '</s>' + str(int(row['has_citation'])) + ' '
-            
-            with open('pre_split_data/train_{}.txt'.format(i), 'w', encoding='utf8') as f:
-                f.write(outstr)
+fold = StratifiedKFold(3, True, 0)
+        #KFold(n_splits=, shuffle=True, random_state=0)
+for i, (train_index, test_index) in enumerate(fold.split(data, data.has_citation)):
+    data.iloc[test_index].to_csv('pre_split_data/test_{}.csv'.format(i), encoding='utf8')
+    train_df = data.iloc[train_index]
+    
+    outstr = ''
+    for _, row in train_df.iterrows():
+        outstr += row[0] + '</s>' + str(int(row['has_citation'])) + ' '
+    
+    with open('pre_split_data/train_{}.txt'.format(i), 'w', encoding='utf8') as f:
+        f.write(outstr)
                 

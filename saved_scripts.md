@@ -9,5 +9,5 @@ sudo pip install sklearn
 `screen -S proj0 ./scripts/proj0.sh`
 
 # To sample:
-`python eval_rnn_as_classifier.py --init_dir=proj0 --temperature=0.5`
+`python evaluate_rnn_classifications.py --init_dir=model1 --temperature=0.5`
 

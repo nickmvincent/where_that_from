@@ -63,7 +63,7 @@ def main():
     mapper = DataFrameMapper([
         ('processed_text', 
             CountVectorizer(
-                #stop_words='english', 
+                # stop_words='english', 
                 lowercase=True,
                 #ngram_range=(5,5)
                 # max_features=10000
@@ -79,30 +79,29 @@ def main():
         (DummyClassifier(strategy='most_frequent'), 'dummy',),
         (LogisticRegression(verbose=0), 'logistic'),
         (svm.LinearSVC(verbose=0), 'svm',),
-        (ExtraTreesClassifier(), 'extra_trees'),
-        (DecisionTreeClassifier(), 'tree'),
+        #(ExtraTreesClassifier(), 'extra_trees'),
+        #(DecisionTreeClassifier(), 'tree'),
         #(KNeighborsClassifier(), '5nn'), # very slow!
-        (GaussianNB(), 'GaussianNB', ) # 'test_accuracy': 0.6799676150821188
+        #(GaussianNB(), 'GaussianNB', ) # 'test_accuracy': 0.6799676150821188
     ]:
-        start = time.time()
+        
         # if name == 'logistic':
         #     clf.fit(X, data.has_citation)
         #     print_topk(10, mapper.transformed_names_, clf)
-        for i, fold in enumerate([
-            # StratifiedKFold(5, True, 0),
-            KFold(n_splits=5, shuffle=True, random_state=0)
-        ]):
-            scores = cross_validate(
-                clf, X, y=data.has_citation, cv=fold,
-                scoring=['accuracy', 'roc_auc', 'f1_macro', ])
-            ret = {}
-            for key, val in scores.items():
-                if 'test_' in key:
-                    ret[key] = np.mean(val)
-            algo_to_score[name + str(i)] = ret
-        print(name, time.time() - start)
-    pprint(algo_to_score)
+
+        cv = KFold(n_splits=5, shuffle=True, random_state=0)
+        start = time.time()
+        scores = cross_validate(
+            clf, X, y=data.has_citation, cv=fold,
+            scoring=['accuracy', 'roc_auc', 'f1_macro', ])
+        ret = {}
+        for key, val in scores.items():
+            if 'test_' in key:
+                ret[key] = np.mean(val)
+        algo_to_score[name] = ret
+        algo_to_score[name]['time'] = round(time.time() - start, 3)
     result_df = pd.DataFrame(algo_to_score)
+    print(len(data.index))
     print(result_df)
 
 if __name__ == '__main__':
