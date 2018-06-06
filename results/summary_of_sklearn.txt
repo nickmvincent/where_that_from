@@ -1,0 +1,16 @@
+dummy 5.888265132904053
+logistic 10.483024835586548
+svm 10.842027187347412
+extra_trees 189.12225365638733
+tree 11553.659584522247
+GaussianNB 97.05080342292786
+
+               GaussianNB0    dummy0  extra_trees0  logistic0      svm0  \
+test_accuracy     0.593892  0.895077      0.910848   0.914676  0.905014
+test_f1_macro     0.452117  0.472314      0.639465   0.725108  0.730527
+test_roc_auc      0.511099  0.500000      0.814381   0.852174  0.800944
+
+                  tree0
+test_accuracy  0.896809
+test_f1_macro  0.701488
+test_roc_auc   0.686171
