@@ -23,7 +23,6 @@ from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 
-
 def print_topk(k, feature_names, clf):
     """Prints features with the highest coefficient values, per class"""
     topk = np.argsort(clf.coef_[0])[-k:]
@@ -38,16 +37,13 @@ def main():
         path = 'labeled_sentences/vincent_etal_chi_2018.csv'
         data = pd.read_csv(path, encoding='utf-8')
     else:
-        sentences_filepaths = glob.glob("labeled_sentences/*.csv")
+        sentences_filepaths = glob.glob("labeled_sentences/psa_research/*.csv")
         data = None
         for path in sentences_filepaths:
             if data is None:
                 data = pd.read_csv(path, encoding='utf-8')
             else:
                 data = pd.concat([data, pd.read_csv(path, encoding='utf-8')])
-        data.to_csv('all_labeled_sentences.csv')
-    
-
 
     # "Feature Engineering"
     data['length'] = data.apply(lambda row: len(row['processed_text']), axis=1)
@@ -92,7 +88,7 @@ def main():
         cv = KFold(n_splits=5, shuffle=True, random_state=0)
         start = time.time()
         scores = cross_validate(
-            clf, X, y=data.has_citation, cv=fold,
+            clf, X, y=data.has_citation, cv=cv,
             scoring=['accuracy', 'roc_auc', 'f1_macro', ])
         ret = {}
         for key, val in scores.items():

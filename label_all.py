@@ -1,14 +1,14 @@
 import glob
 from label_sentences import label_sentences
-from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import KFold
 import pandas as pd
 
-sentences_filepaths = glob.glob("sentences/*.csv")
+sentences_filepaths = glob.glob("sentences/*/*.csv")
 for sentences_filepath in sentences_filepaths:
     print(sentences_filepath)
     label_sentences(sentences_filepath, mode='auto')
 
-sentences_filepaths = glob.glob("labeled_sentences/*.csv")
+sentences_filepaths = glob.glob("labeled_sentences/*/*.csv")
 data = None
 for path in sentences_filepaths:
     if data is None:
@@ -17,8 +17,7 @@ for path in sentences_filepaths:
         data = pd.concat([data, pd.read_csv(path, encoding='utf-8')])
 data.to_csv('all_labeled_sentences.csv')
 
-fold = StratifiedKFold(3, True, 0)
-        #KFold(n_splits=, shuffle=True, random_state=0)
+fold = KFold(n_splits=5, shuffle=True, random_state=0)
 for i, (train_index, test_index) in enumerate(fold.split(data, data.has_citation)):
     data.iloc[test_index].to_csv('pre_split_data/test_{}.csv'.format(i), encoding='utf8')
     train_df = data.iloc[train_index]

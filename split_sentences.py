@@ -1,4 +1,5 @@
 from nltk import tokenize
+import re
 
 def test():
     """Driver"""
@@ -16,6 +17,20 @@ def split_sentences(filepath='sample_paper.txt'):
     """Driver"""
     with open(filepath, 'r') as f:
         data = f.read()
+    
+    # chop off the references
+    ref_matches = [m.start() for m in re.finditer('references 1', data.lower())]
+    if ref_matches:
+        data = data[:ref_matches[-1]]
+    else:
+        print('Did not find references 1 so let us try just finding the word references')
+        ref_matches = [m.start() for m in re.finditer('references', data.lower())]
+        if ref_matches:
+            data = data[:ref_matches[-1]]
+        else:
+            raise ValueError('No references in {}'.format(filepath))
+        
+    
     pairs = {
         'Fig': 'Fig',
         'e.g.': 'eg',
@@ -24,8 +39,10 @@ def split_sentences(filepath='sample_paper.txt'):
     }
     for key, val in pairs.items():
         data = data.replace(key, val)
+    
+
     sentences = tokenize.sent_tokenize(data)
-    print(sentences)
+    #print(sentences)
 
     out = ['text,label,has_citation']
     for sentence in sentences:
