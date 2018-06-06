@@ -24,7 +24,7 @@ for i, (train_index, test_index) in enumerate(fold.split(data, data.has_citation
     
     outstr = ''
     for _, row in train_df.iterrows():
-        outstr += row[0] + '</s>' + str(int(row['has_citation'])) + ' '
+        outstr += row[0] + '``' + str(int(row['has_citation'])) + ' '
     
     with open('pre_split_data/train_{}.txt'.format(i), 'w', encoding='utf8') as f:
         f.write(outstr)

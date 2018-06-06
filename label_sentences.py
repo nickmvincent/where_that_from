@@ -47,6 +47,13 @@ def label_sentences(filepath='sample_paper.csv', mode='manual',load_from=None,  
                 ).replace(
                     '(eg,)', ''
                 )
+            
+            sent_wo_matches = sent_wo_matches.replace(
+                    ' .', '.'
+                ).replace(
+                    ' ,', ','
+                )
+            
             # hanging_eg = sent_wo_matches.find('(eg')
             # if hanging_eg != -1:
             #     close = sent_wo_matches.find(')', hanging_eg)
@@ -58,20 +65,6 @@ def label_sentences(filepath='sample_paper.csv', mode='manual',load_from=None,  
         'sentences\\', 'labeled_sentences/'
     )
     df.to_csv(outname, index=False)
-
-    # rnn_outname = filepath.replace(
-    #     'sentences/', 'rnn_sentences/',    
-    # ).replace(
-    #     'sentences\\', 'rnn_sentences/'
-    # ).replace(
-    #     '.csv', '.txt',
-    # )
-    # outstr = ''
-    # for i, row in df.iterrows():
-    #     outstr += row[0] + '</s>' + str(int(row['has_citation'])) + ' '
-    
-    # with open(rnn_outname, 'w') as f:
-    #     f.write(outstr)
 
 
 def parse():

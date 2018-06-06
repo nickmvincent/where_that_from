@@ -33,7 +33,7 @@ def split_sentences(filepath='sample_paper.txt'):
     
     # do some replacement
     pairs = {
-        'Fig': 'Fig',
+        'Fig.': 'Fig',
         'e.g.': 'eg',
         'i.e.': 'ie',
         'et al.': 'et al',
