@@ -51,11 +51,6 @@ def main():
     # with open("glove.6B.50d.txt", "rb") as lines:
     #     w2v = {line.split()[0]: np.array(map(float, line.split()[1:]))
     #         for line in lines}
-
-    print(data.head())
-    print(len(data.index))
-    #input()
-
     mapper = DataFrameMapper([
         ('processed_text', 
             CountVectorizer(
@@ -95,7 +90,9 @@ def main():
             if 'test_' in key:
                 ret[key] = np.mean(val)
         algo_to_score[name] = ret
-        algo_to_score[name]['time'] = round(time.time() - start, 3)
+        tic = round(time.time() - start, 3)
+        algo_to_score[name]['time'] = tic
+        print(name, tic)
     result_df = pd.DataFrame(algo_to_score)
     print(len(data.index))
     print(result_df)

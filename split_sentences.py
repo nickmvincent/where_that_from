@@ -31,6 +31,7 @@ def split_sentences(filepath='sample_paper.txt'):
             raise ValueError('No references in {}'.format(filepath))
         
     
+    # do some replacement
     pairs = {
         'Fig': 'Fig',
         'e.g.': 'eg',
@@ -39,7 +40,6 @@ def split_sentences(filepath='sample_paper.txt'):
     }
     for key, val in pairs.items():
         data = data.replace(key, val)
-    
 
     sentences = tokenize.sent_tokenize(data)
     #print(sentences)

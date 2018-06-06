@@ -33,7 +33,7 @@ def label_sentences(filepath='sample_paper.csv', mode='manual',load_from=None,  
             if savequit:
                 break
         else:
-            matches = re.findall(r'\[\d.*?\]', sentence)
+            matches = re.findall(r' \[\d.*?\]', sentence)
             if matches:
                 df.loc[i, 'has_citation'] = 1
             else:
@@ -41,6 +41,16 @@ def label_sentences(filepath='sample_paper.csv', mode='manual',load_from=None,  
             sent_wo_matches = sentence
             for match in matches:
                 sent_wo_matches = sent_wo_matches.replace(match, "")
+            #sent_wo_matches = sent_wo_matches.replace(' ,', ',')
+            sent_wo_matches = sent_wo_matches.replace(
+                    '(eg)', ''
+                ).replace(
+                    '(eg,)', ''
+                )
+            # hanging_eg = sent_wo_matches.find('(eg')
+            # if hanging_eg != -1:
+            #     close = sent_wo_matches.find(')', hanging_eg)
+            #     sent_wo_matches = sent_wo_matches[:hanging_eg] + sent_wo_matches[close:]
             df.loc[i, 'processed_text'] = sent_wo_matches
     outname = filepath.replace(
         'sentences/', 'labeled_sentences/',    
