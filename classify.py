@@ -52,13 +52,13 @@ def main():
     # "Feature Engineering"
     data['length'] = data.apply(lambda row: len(row['processed_text']), axis=1)
     data['has_digits'] = data.apply(lambda row: any(char.isdigit() for char in row['processed_text']), axis=1)
-    with open("glove.6B.50d.txt", "rb") as lines:
-        w2v = {line.split()[0]: np.array(map(float, line.split()[1:]))
-            for line in lines}
+    # with open("glove.6B.50d.txt", "rb") as lines:
+    #     w2v = {line.split()[0]: np.array(map(float, line.split()[1:]))
+    #         for line in lines}
 
     print(data.head())
     print(len(data.index))
-    input()
+    #input()
 
     mapper = DataFrameMapper([
         ('processed_text', 
@@ -79,10 +79,10 @@ def main():
         (DummyClassifier(strategy='most_frequent'), 'dummy',),
         (LogisticRegression(verbose=0), 'logistic'),
         (svm.LinearSVC(verbose=0), 'svm',),
-        (ExtraTreesClassifier(), 'extra_trees')
-        #(DecisionTreeClassifier(), 'tree'),
+        (ExtraTreesClassifier(), 'extra_trees'),
+        (DecisionTreeClassifier(), 'tree'),
         #(KNeighborsClassifier(), '5nn'), # very slow!
-        #(GaussianNB(), 'GaussianNB', ) # 'test_accuracy': 0.6799676150821188
+        (GaussianNB(), 'GaussianNB', ) # 'test_accuracy': 0.6799676150821188
     ]:
         start = time.time()
         # if name == 'logistic':

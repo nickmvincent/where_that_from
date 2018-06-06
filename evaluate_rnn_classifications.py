@@ -86,21 +86,24 @@ def main():
     y = []
     y_hat = []
     n = len(data.index)
-    for i, row in data.iterrows():
-        if i % 10 == 0:
-            print('{} of {} examples tested'.format(i, n))
-        text = row['processed_text'] + '</s>'
-        has_citation = row['has_citation']
-        y.append(has_citation)
-        with tf.Session(graph=graph) as session:
-            saver.restore(session, best_model)
+    
+    with tf.Session(graph=graph) as session:
+        saver.restore(session, best_model)
+        
+        for i, row in data.iterrows():
+            if i % 10 == 0:
+                print('{} of {} examples tested'.format(i, n))
+            text = row['processed_text'] + '</s>'
+            has_citation = int(row['has_citation'])
+            y.append(has_citation)
             sample = test_model.sample_seq(session, 1, text,
                                             vocab_index_dict, index_vocab_dict,
                                             temperature=args.temperature,
                                             max_prob=args.max_prob)
-            #print('Sampled text is:\n%s' % sample)
-            predicted_label = int(sample[-1])
-            # print('Predicted label is: {}'.format(predicted_label))
+            try:
+                predicted_label = int(sample[-1])
+            except ValueError:
+                predicted_label = 0
             y_hat.append(predicted_label)
 
     try:
@@ -114,6 +117,10 @@ def main():
         roc_auc, f1_macro, acc
     ))
 
+    df = pd.DataFrame()
+    df['y'] = y
+    df['y_hat'] = y_hat
+    df.to_csv(args.init_dir + '/predictions.csv')
     with open('y_hat.txt', 'w') as f:
         f.write('\n'.join(
             [str(x) for x in y_hat]
