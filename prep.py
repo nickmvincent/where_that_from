@@ -6,7 +6,7 @@ from split_sentences import split_sentences
 # first convert .pdf to .txt using the command line utility pdftotext from Xpdf
 for folder in [
     'pdf_files/psa_research', 
-    #'pdf_files/chi_2018_pdf_files'
+    'pdf_files/chi_2018'
 ]:
     pdf_filepaths = glob.glob("{}/*.pdf".format(folder))
     for pdf_filepath in pdf_filepaths:

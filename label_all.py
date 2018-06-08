@@ -3,7 +3,8 @@ from label_sentences import label_sentences
 from sklearn.model_selection import KFold
 import pandas as pd
 
-sentences_filepaths = glob.glob("sentences/*/*.csv")
+# TODO
+sentences_filepaths = glob.glob("sentences/psa_research/*.csv")
 for sentences_filepath in sentences_filepaths:
     print(sentences_filepath)
     label_sentences(sentences_filepath, mode='auto')

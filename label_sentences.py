@@ -33,7 +33,7 @@ def label_sentences(filepath='sample_paper.csv', mode='manual',load_from=None,  
             if savequit:
                 break
         else:
-            matches = re.findall(r' \[\d.*?\]', sentence)
+            matches = re.findall(r' ?\[\d.*?\]', sentence)
             if matches:
                 df.loc[i, 'has_citation'] = 1
             else:
