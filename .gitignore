@@ -5,6 +5,7 @@ sentences/
 txt_files/
 glove*
 pre_split_data/
+tf_model*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

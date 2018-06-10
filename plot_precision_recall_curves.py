@@ -5,11 +5,7 @@ import seaborn as sns
 
 sns.set_palette('muted')
 
-
-df = pd.read_csv('results/psa_research/precision_recall_dataframe.csv') 
-# g = sns.FacetGrid(data=df, col='name', hue='max_features', col_wrap=4)
-# g = g.map(sns.tsplot, data=df, time='recall', value='precision', color="r")
-
+df = pd.read_csv('results/chi_2018/precision_recall_dataframe.csv') 
 print(df.head())
 
 g = sns.FacetGrid(

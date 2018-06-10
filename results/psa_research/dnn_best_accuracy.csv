@@ -1,0 +1,2 @@
+,accuracy,accuracy_std,algo_name,feature_selector,max_features,name,roc_auc,roc_auc_std,time,weights
+0,0.8764480352401733,0.013186859898269176,DNN,,,DNN_7400steps,0.7982484102249146,0.01398320123553276,210.54074807167052,

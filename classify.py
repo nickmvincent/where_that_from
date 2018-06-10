@@ -53,7 +53,7 @@ def run_experiment(X, y, max_features, feature_selector, args):
     long_result_row_dicts = []
     algo_to_score = defaultdict(dict)
     clf_sets = []
-    C_vals = [0.01, 0.1, 1, 10, 100]
+    C_vals = [0.1, 1, 10, 100]
     
     for C_val in C_vals:
         clf_sets += [
@@ -88,14 +88,17 @@ def run_experiment(X, y, max_features, feature_selector, args):
                 ),
             ]
     
+
     clf_sets += [
         (DummyClassifier(strategy='most_frequent'), 'SelectNoSentences', 'SelectNoSentences', 0.1, 'default'),
         #(DummyClassifier(strategy='constant', constant=1), 'SelectEverySentence',),
-        (DecisionTreeClassifier(), 'tree', 'tree', 0.1, 'default'),
-        (GaussianNB(), 'GaussianNb', 'GaussianNb', 0.1, 'default'),
-        #(MultinomialNB(), 'MultinomialNB', 'MultinomialNB', 0.1, 'default'),
-        (KNeighborsClassifier(3), '3nn', '3nn', 0.1, 'default'),
     ]
+    if args.data_dir == 'psa_research':
+        clf_sets += [
+            (DecisionTreeClassifier(), 'tree', 'tree', 0.1, 'default'),
+            (GaussianNB(), 'GaussianNb', 'GaussianNb', 0.1, 'default'),
+            (KNeighborsClassifier(3), '3nn', '3nn', 0.1, 'default'),
+        ]
     for clf, name, algo_name, C_val, weights in clf_sets:
         # if name == 'logistic':
         #     clf.fit(X, data.has_citation)
@@ -109,11 +112,12 @@ def run_experiment(X, y, max_features, feature_selector, args):
         ret = {}
         for key, val in scores.items():
             if 'test_' in key:
-                ret[key.replace('test_', '')] = np.mean(val)
+                score = key.replace('test_', '') 
+                ret[score] = np.mean(val)
+                ret[score + '_std'] = np.std(val)                
         algo_to_score[name] = ret
         tic = round(time.time() - start, 3)
         algo_to_score[name]['time'] = tic
-        
 
         X_train, X_test, y_train, y_test = train_test_split(
                     X, y, test_size=0.2, random_state=0)
@@ -134,6 +138,7 @@ def run_experiment(X, y, max_features, feature_selector, args):
         }
         for score in SCORES:
             long_result_row_dict[score] = algo_to_score[name][score]
+            long_result_row_dict[score + '_std'] = algo_to_score[name][score + '_std']
         long_result_row_dicts.append(long_result_row_dict)
 
         for precision_val, recall_val in zip(precision, recall):
@@ -162,12 +167,12 @@ def run_experiment(X, y, max_features, feature_selector, args):
         maxes[key] = [max_val, max_idx]
     #print(maxes)
 
-    long_results_df = pd.DataFrame(long_result_row_dicts)
+    results_df = pd.DataFrame(long_result_row_dicts)
     long_precision_recall_df = pd.DataFrame(long_precision_recall_row_dicts)
     # sns.factorplot(data=long_df, x='recall', y='precision', col='name', col_wrap=5)
     # plt.show()
 
-    return maxes, long_results_df, long_precision_recall_df
+    return maxes, results_df, long_precision_recall_df
 
 def main(args):
     if False:
@@ -209,7 +214,7 @@ def main(args):
                 #lowercase=True,
                 #ngram_range=(5,5)
                 strip_accents='unicode',
-                #max_features=10000
+                max_features=10000
                 )
         ),
         (['length'], StandardScaler()),
@@ -325,7 +330,7 @@ def parse():
                         help='run experiments')
     parser.add_argument('--prc', action='store_true',
                         help='Draw precision recall curve')
-    parser.add_argument('--max_features_vals', default='50,100,500,1000,2000,3000,4000,5000',
+    parser.add_argument('--max_features_vals', default='50,100,500,1000,2000,3000,4000',
                         help='max # of features to use')
     parser.add_argument('--other_class_weights', action='store_true', help='try alternate class weights')
     parser.add_argument('--data_dir', default='psa_research',
